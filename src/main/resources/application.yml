@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://20130072:PweEnQ86H5y5pRZp@websocket.zvdnie0.mongodb.net/?retryWrites=true&w=majority&appName=websocket
+      username: 20130072
+      password: PweEnQ86H5y5pRZp
+      database: websocket
+      port: 27017
+      authentication-database: admin
+
+server:
+  port: 9090
