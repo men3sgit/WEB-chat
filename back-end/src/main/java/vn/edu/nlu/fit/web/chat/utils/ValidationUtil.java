@@ -6,7 +6,7 @@ import org.apache.commons.validator.routines.UrlValidator;
 public class ValidationUtil {
 
     private static final EmailValidator emailValidator = EmailValidator.getInstance();
-    private static final UrlValidator urlValidator =    UrlValidator.getInstance();
+    private static final UrlValidator urlValidator = UrlValidator.getInstance();
 
 
     private ValidationUtil() {

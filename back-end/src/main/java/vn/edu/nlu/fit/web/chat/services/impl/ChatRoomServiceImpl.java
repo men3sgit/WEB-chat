@@ -1,7 +1,7 @@
 package vn.edu.nlu.fit.web.chat.services.impl;
 
 import vn.edu.nlu.fit.web.chat.documents.ChatRoom;
-import vn.edu.nlu.fit.web.chat.repositories.ChatRoomRepository;
+import vn.edu.nlu.fit.web.chat.repositoriy.ChatRoomRepository;
 import vn.edu.nlu.fit.web.chat.services.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

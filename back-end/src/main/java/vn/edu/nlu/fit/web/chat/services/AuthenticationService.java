@@ -1,7 +1,6 @@
 package vn.edu.nlu.fit.web.chat.services;
 
-import org.springframework.security.core.AuthenticationException;
-import vn.edu.nlu.fit.web.chat.dto.AuthenticationResponseDto;
+import vn.edu.nlu.fit.web.chat.payload.AuthenticationResponse;
 
 public interface AuthenticationService {
 
@@ -11,10 +10,8 @@ public interface AuthenticationService {
      *
      * @param username the username of the user
      * @param password the user's password
-     * @return true if login is successful, false otherwise
-     * @throws AuthenticationException if there's an issue with authentication
      */
-    boolean login(String username, String password) throws AuthenticationException;
+    AuthenticationResponse login(String username, String password);
 
     /**
      * Logs the currently authenticated user out of the chat system.

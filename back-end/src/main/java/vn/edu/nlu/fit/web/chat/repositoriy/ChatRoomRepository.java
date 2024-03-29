@@ -1,4 +1,4 @@
-package vn.edu.nlu.fit.web.chat.repositories;
+package vn.edu.nlu.fit.web.chat.repositoriy;
 
 import vn.edu.nlu.fit.web.chat.documents.ChatRoom;
 import org.springframework.data.mongodb.repository.MongoRepository;

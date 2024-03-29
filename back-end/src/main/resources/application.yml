@@ -8,5 +8,14 @@ spring:
       port: 27017
       authentication-database: admin
 
+  # SECURITY
+  security:
+    oauth2:
+       client:
+         registration:
+           google:
+             client-id: ###
+             client-secret: ##
+
 server:
   port: 9090

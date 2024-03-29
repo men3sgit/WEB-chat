@@ -1,4 +1,4 @@
-package vn.edu.nlu.fit.web.chat.dto;
+package vn.edu.nlu.fit.web.chat.payload;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 
 import java.time.Instant;
 
-import static vn.edu.nlu.fit.web.chat.utils.HttpRequestUtil.getHttpRequestURL;
+import static vn.edu.nlu.fit.web.chat.utils.RequestUtil.getRequestUrl;
 
 @Data
 @NoArgsConstructor
@@ -40,7 +40,7 @@ public class ApiResponse<T> {
         this.statusCode = HttpStatus.OK.value();
         this.message = "Success";
         this.timestamp = Instant.now();
-        this.url = getHttpRequestURL();
+        this.url = getRequestUrl().orElse("");
     }
 
     // Separate constructor for error responses
@@ -48,7 +48,7 @@ public class ApiResponse<T> {
         this.statusCode = statusCode;
         this.message = message;
         this.timestamp = Instant.now();
-        this.url = getHttpRequestURL();
+        this.url = getRequestUrl().orElse("");
     }
 
     @Override

@@ -1,11 +1,11 @@
-package vn.edu.nlu.fit.web.chat.dto;
+package vn.edu.nlu.fit.web.chat.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class LoginDto {
+public class LoginRequest {
     private String username;
     private String password;
 }

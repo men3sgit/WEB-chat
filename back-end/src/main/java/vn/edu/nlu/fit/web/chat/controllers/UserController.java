@@ -1,6 +1,12 @@
 package vn.edu.nlu.fit.web.chat.controllers;
 
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import vn.edu.nlu.fit.web.chat.documents.User;
+import vn.edu.nlu.fit.web.chat.payload.ApiResponse;
+import vn.edu.nlu.fit.web.chat.payload.RegistrationRequest;
+import vn.edu.nlu.fit.web.chat.payload.RegistrationResponse;
 import vn.edu.nlu.fit.web.chat.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,26 +25,25 @@ public class UserController {
 
     @MessageMapping("/user.connect")
     @SendTo("/user/topic")
-    public User connect(@Payload User user){
+    public User connect(@Payload User user) {
         userService.connect(user);
         return user;
     }
 
     @MessageMapping("/user.disconnect")
     @SendTo("/user/topic")
-    public User disconnect(@Payload User user){
+    public User disconnect(@Payload User user) {
         userService.disconnect(user);
         return user;
     }
 
 
     @GetMapping("/connected-users")
-    public ResponseEntity<List<User>> getConnectedUsers(){
+    public ResponseEntity<List<User>> getConnectedUsers() {
         return ResponseEntity.ok(
                 userService.getConnectedUsers()
         );
     }
-
 
 
 }
