@@ -1,4 +1,4 @@
 package vn.edu.nlu.fit.web.chat.payload;
 
-public class RegistrationResponse {
+public record RegistrationResponse(Long id) {
 }

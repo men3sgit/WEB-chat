@@ -11,7 +11,10 @@ public class User {
     private Long id;
     private String email;
     private String username;
-    private String fullName;
+    private String password;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
     private Status status;
 
 }
