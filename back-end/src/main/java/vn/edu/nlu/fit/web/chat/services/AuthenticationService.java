@@ -1,6 +1,6 @@
 package vn.edu.nlu.fit.web.chat.services;
 
-import vn.edu.nlu.fit.web.chat.payload.AuthenticationResponse;
+import vn.edu.nlu.fit.web.chat.payload.LoginResponse;
 
 public interface AuthenticationService {
 
@@ -8,10 +8,10 @@ public interface AuthenticationService {
     /**
      * Logs a user into the chat system.
      *
-     * @param username the username of the user
+     * @param email the email of the user
      * @param password the user's password
      */
-    AuthenticationResponse login(String username, String password);
+    LoginResponse login(String email, String password);
 
     /**
      * Logs the currently authenticated user out of the chat system.

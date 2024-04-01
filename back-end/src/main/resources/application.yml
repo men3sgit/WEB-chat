@@ -1,12 +1,9 @@
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://20130072:PweEnQ86H5y5pRZp@websocket.zvdnie0.mongodb.net/?retryWrites=true&w=majority&appName=websocket
-      username: 20130072
-      password: PweEnQ86H5y5pRZp
-      database: websocket
+      uri: mongodb://localhost
+      database: chatchit
       port: 27017
-      authentication-database: admin
 
   # SECURITY
   security:
@@ -14,8 +11,8 @@ spring:
        client:
          registration:
            google:
-             client-id: ###
-             client-secret: ##
+             client-id: 123
+             client-secret: 123
   # Server mail
   mail:
     host: smtp.gmail.com
@@ -36,3 +33,21 @@ spring:
 
 server:
   port: 9090
+
+app:
+  baseURL: localhost:8080
+  name: ChatChit
+  jwt:
+    secretKey: c3ckfrhaKW8Mplm9ylgQCsMLoFmsip/ouP1u51eWRLRtCgDA6OFoLH+azJtNEDUYODPqhm/Kms2jYJdaIczcrap9vBVrbd7qMk1AuoNJjZg=
+    expiration-time-ms: 86400000 # 30 minutes
+  token:
+    refresh:
+      expiration-time-ms: 86400000 # a day
+
+    registration:
+      expiration-time-ms: 900000 # 15 minutes
+      verify-endpoint: ${url.domain}/api/v1/auth/verify-registration
+
+    forgot-password:
+      expiration-time-ms: 1800000 # 30 minutes
+      verify-endpoint: ${url.domain}/api/v1/auth/verify-forgot-password

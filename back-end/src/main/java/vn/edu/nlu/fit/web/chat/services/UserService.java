@@ -16,7 +16,7 @@ public interface UserService {
 
     RegistrationResponse register(RegistrationRequest request);
 
-    void verifyAccount(String token);
+    void verifyNewUser(String token);
 
 
 }

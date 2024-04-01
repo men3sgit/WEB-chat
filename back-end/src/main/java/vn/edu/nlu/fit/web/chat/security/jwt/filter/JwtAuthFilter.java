@@ -1,6 +1,5 @@
 package vn.edu.nlu.fit.web.chat.security.jwt.filter;
 
-import com.rse.webservice.locket.security.jwt.impl.JwtServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import vn.edu.nlu.fit.web.chat.security.jwt.JwtService;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -23,7 +23,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
-    private final JwtServiceImpl jwtUtils;
+    private final JwtService jwtService;
 
     @Override
     protected void doFilterInternal(
@@ -38,10 +38,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
 
         String token = parseJwt(request);
-        String username = jwtUtils.extractUsername(token);
+        String username = jwtService.extractUsername(token);
         if (Objects.nonNull(username) && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            if (jwtUtils.validateToken(token, userDetails)) {
+            if (jwtService.validateToken(token, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,

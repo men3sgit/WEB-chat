@@ -1,6 +1,7 @@
 package vn.edu.nlu.fit.web.chat.services.impl;
 
 import vn.edu.nlu.fit.web.chat.documents.ChatRoom;
+import vn.edu.nlu.fit.web.chat.documents.ChatRoomInfo;
 import vn.edu.nlu.fit.web.chat.repositoriy.ChatRoomRepository;
 import vn.edu.nlu.fit.web.chat.services.ChatRoomService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,16 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             return createChatId(senderId, recipientId);
         }
 
+        return Optional.empty();
+    }
+
+    @Override
+    public void addUserToChatRoom(String chatId, Long userId) {
+
+    }
+
+    @Override
+    public Optional<ChatRoomInfo> getChatRoomInfo(String chatId) {
         return Optional.empty();
     }
 

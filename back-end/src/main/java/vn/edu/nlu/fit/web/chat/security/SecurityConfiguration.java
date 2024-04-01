@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import vn.edu.nlu.fit.web.chat.security.jwt.filter.JwtAuthFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -23,7 +24,9 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests((authorized) -> authorized.anyRequest().authenticated())
+                .authorizeHttpRequests((authorized) -> authorized
+                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .anyRequest().authenticated())
                 .sessionManagement((sessionManager) -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
@@ -38,22 +41,11 @@ public class SecurityConfiguration {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers(IGNORED_PATH);
+        return (web) -> web.ignoring().requestMatchers(IGNORED_ENDPOINTS);
     }
 
-    public static final String[] IGNORED_PATH = new String[]{
-            "/api/v*/auth/register",
-            "/api/v*/auth/login",
-            "/api/v*/auth/verify**",
-            "/api/v*/verify/**",
-            "/",
-            "/api/v1/refresh-token/self",
-            "/api/v1/files/**",
-            "/api/v1/images/**",
-            "/api/v1/accounts**",
-            "/api/v1/auth/forgot-password",
-            "/api/v1/auth/verify-forgot-password**",
-            "/api/v1/posts**"
+    public static final String[] IGNORED_ENDPOINTS = new String[]{
+            "/api/v1/users/connected"
     };
 
 }
