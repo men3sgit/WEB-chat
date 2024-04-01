@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Instant;
+
 @Document
 @Data
 @NoArgsConstructor
@@ -13,27 +15,32 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 public class VerificationToken implements Token {
     private Long id;
-    private Long userId;
-    private long expiry;
+    private String email;
+    private Instant expiry;
     private String token;
 
     @Override
-    public String getToken() {
+    public String getTokenValue() {
         return token;
     }
 
     @Override
-    public void setToken(String token) {
+    public void setTokenValue(String token) {
         this.token = token;
     }
 
     @Override
-    public long getExpiryDate() {
+    public Instant getExpiryInstant() {
         return this.expiry;
     }
 
     @Override
-    public void setExpiryDate(long expiryDate) {
-        this.expiry = expiryDate;
+    public void setExpiryInstant(Instant expiryInstant) {
+
+    }
+
+    @Override
+    public TokenType getTokenType() {
+        return TokenType.VERIFICATION;
     }
 }

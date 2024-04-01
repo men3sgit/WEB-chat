@@ -1,7 +1,6 @@
-package com.rse.webservice.locket.security.jwt.impl;
+package vn.edu.nlu.fit.web.chat.security.jwt.impl;
 
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import org.slf4j.Logger;
@@ -12,19 +11,17 @@ import org.springframework.stereotype.Service;
 import vn.edu.nlu.fit.web.chat.security.jwt.JwtService;
 
 import javax.crypto.SecretKey;
-import java.security.PrivateKey;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-
 @Service
 public class JwtServiceImpl implements JwtService {
     public static final Logger LOGGER = LoggerFactory.getLogger(JwtServiceImpl.class);
-    @Value("${locket.app.jwt.secretKey}")
+    @Value("${app.jwt.secretKey}")
     private String SECRET_KEY;
-    @Value("${locket.app.jwt.expiration-time-ms}")
+    @Value("${app.jwt.expiration-time-ms}")
     private int EXPIRATION;
 
     @Override

@@ -17,7 +17,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import vn.edu.nlu.fit.web.chat.utils.SpringDataUtil;
 
+import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 @Service
@@ -28,6 +31,7 @@ public class UserServiceImpl implements UserService {
     private final TokenService tokenService;
 
     private final EmailService emailService;
+
 
     @Override
     public void connect(User user) {
@@ -51,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getConnectedUsers() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -67,12 +71,13 @@ public class UserServiceImpl implements UserService {
 
         // TODO: create new token then send
         try {
-            Token verificationToken = VerificationToken.builder().build();
-            String tokenStr = tokenService.generateToken(verificationToken);
-            emailService.sendVerificationEmail(newUser.getEmail(), tokenStr);
-            tokenService.saveToken(verificationToken);
+            Token verificationToken = VerificationToken.builder()
+                    .email(newUser.getEmail())
+                    .expiry(Instant.ofEpochSecond(600L))
+                    .token(UUID.randomUUID().toString())
+                    .build();
+            emailService.sendVerificationEmail(newUser.getEmail(), verificationToken.getTokenValue());
         } catch (InvalidTokenException e) {
-            Logger.getLogger("s");
         }
 
         return new RegistrationResponse(newUser.getId());
@@ -82,16 +87,18 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id)
                 .orElse(null);
     }
-    @Override
-    public void verifyAccount(String token) {
-        Token verificationToken = tokenService.getToken(token);
-        if (tokenService.isTokenExpired()) { // Implement isExpired() in Token
-            throw new InvalidTokenException("Verification token expired!");
-        }
 
-        User user = verificationToken.getUser(); // Assuming Token has getUser()
-        user.setVerified(true);
+    @Override
+    public void verifyNewUser(String tokenValue) {
+        VerificationToken verificationToken = (VerificationToken) tokenService.getToken(tokenValue);
+
+        if (tokenService.isTokenExpired(verificationToken.getTokenValue())) {
+            throw new InvalidTokenException("Token expired");
+        }
+        User user = userRepository.findByEmail(verificationToken.getEmail()).orElseThrow(() -> new ApiRequestException("Email not found"));
+        user.setActive(true);
         userRepository.save(user);
     }
+
 
 }
