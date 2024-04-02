@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 /**
  * A utility class providing helper methods for interacting with Spring Security.
  */
-public class SecurityUtils {
+public class SpringSecurityUtil {
 
     /**
      * Retrieves the currently authenticated username from the Spring Security context.

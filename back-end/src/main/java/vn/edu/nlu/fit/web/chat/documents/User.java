@@ -1,6 +1,5 @@
 package vn.edu.nlu.fit.web.chat.documents;
 
-import com.mongodb.lang.NonNull;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,7 +15,7 @@ import java.util.stream.Collectors;
 @Document(collection = "users")
 public class User implements UserDetails {
     @Id
-    private Long id;
+    private String id;
     private String email;
     private String username;
     private String password;

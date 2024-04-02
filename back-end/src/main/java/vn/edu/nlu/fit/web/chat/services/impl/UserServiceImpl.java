@@ -5,6 +5,8 @@ import vn.edu.nlu.fit.web.chat.documents.Status;
 import vn.edu.nlu.fit.web.chat.documents.User;
 import vn.edu.nlu.fit.web.chat.documents.token.Token;
 import vn.edu.nlu.fit.web.chat.documents.token.VerificationToken;
+import vn.edu.nlu.fit.web.chat.dto.UserDto;
+import vn.edu.nlu.fit.web.chat.dto.mapper.UserDtoMapper;
 import vn.edu.nlu.fit.web.chat.exceptions.ApiRequestException;
 import vn.edu.nlu.fit.web.chat.exceptions.InvalidTokenException;
 import vn.edu.nlu.fit.web.chat.payload.RegistrationRequest;
@@ -18,10 +20,8 @@ import org.springframework.stereotype.Service;
 import vn.edu.nlu.fit.web.chat.utils.SpringDataUtil;
 
 import java.time.Instant;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 @Service
 @RequiredArgsConstructor
@@ -32,10 +32,12 @@ public class UserServiceImpl implements UserService {
 
     private final EmailService emailService;
 
+    private final UserDtoMapper userDtoMapper;
+
 
     @Override
     public void connect(User user) {
-        user.setId(10L);
+        user.setId("10");
         user.setStatus(Status.ONLINE);
         userRepository.save(user);
     }
@@ -54,8 +56,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getConnectedUsers() {
-        return Collections.emptyList();
+    public List<UserDto> getConnectedUsers() {
+        return userRepository.findAllByStatus(Status.ONLINE)
+                .stream()
+                .map(userDtoMapper)
+                .toList();
     }
 
     @Override
@@ -83,7 +88,7 @@ public class UserServiceImpl implements UserService {
         return new RegistrationResponse(newUser.getId());
     }
 
-    private User getUserById(Long id) {
+    private User getUserById(String id) {
         return userRepository.findById(id)
                 .orElse(null);
     }

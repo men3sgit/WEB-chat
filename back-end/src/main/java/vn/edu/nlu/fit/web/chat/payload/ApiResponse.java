@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 
 import java.time.Instant;
 
-import static vn.edu.nlu.fit.web.chat.utils.RequestUtil.getRequestUrl;
+import static vn.edu.nlu.fit.web.chat.utils.HttpRequestUtil.getHttpRequestURL;
 
 @Data
 @NoArgsConstructor
@@ -40,7 +40,7 @@ public class ApiResponse<T> {
         this.statusCode = HttpStatus.OK.value();
         this.message = "Success";
         this.timestamp = Instant.now();
-        this.url = getRequestUrl().orElse("");
+        this.url = getHttpRequestURL().orElse("");
     }
 
     // Separate constructor for error responses
@@ -48,7 +48,7 @@ public class ApiResponse<T> {
         this.statusCode = statusCode;
         this.message = message;
         this.timestamp = Instant.now();
-        this.url = getRequestUrl().orElse("");
+        this.url = getHttpRequestURL().orElse("");
     }
 
     @Override

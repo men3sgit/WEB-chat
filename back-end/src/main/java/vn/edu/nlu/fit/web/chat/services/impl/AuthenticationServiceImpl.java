@@ -14,7 +14,7 @@ import vn.edu.nlu.fit.web.chat.payload.LoginResponse;
 import vn.edu.nlu.fit.web.chat.exceptions.ApiRequestException;
 import vn.edu.nlu.fit.web.chat.security.jwt.JwtService;
 import vn.edu.nlu.fit.web.chat.services.AuthenticationService;
-import vn.edu.nlu.fit.web.chat.utils.SecurityUtils;
+import vn.edu.nlu.fit.web.chat.utils.SpringSecurityUtil;
 
 @Service
 @RequiredArgsConstructor
@@ -59,7 +59,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public String getCurrentUsername() {
-        return SecurityUtils.getCurrentUsername();
+        return SpringSecurityUtil.getCurrentUsername();
     }
 }
 
