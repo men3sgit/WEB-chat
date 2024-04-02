@@ -13,12 +13,12 @@ import java.util.Optional;
  * @author Menes
  * @since 1.0.0
  */
-public class RequestUtil {
+public class HttpRequestUtil {
 
     /**
      * Private constructor to prevent instantiation.
      */
-    private RequestUtil() {
+    private HttpRequestUtil() {
         // Intentionally empty
     }
 
@@ -28,9 +28,9 @@ public class RequestUtil {
      *
      * @return Optional containing the request URL, or empty if unavailable.
      */
-    public static Optional<String> getRequestUrl() {
+    public static Optional<String> getHttpRequestURL() {
         return Optional.ofNullable(RequestContextHolder.getRequestAttributes())
-                .flatMap(RequestUtil::extractUrl);
+                .flatMap(HttpRequestUtil::extractURL);
     }
 
     /**
@@ -39,7 +39,7 @@ public class RequestUtil {
      * @param attributes the RequestAttributes to extract the URL from
      * @return Optional containing the request URL, or empty if not retrievable
      */
-    private static Optional<String> extractUrl(RequestAttributes attributes) {
+    private static Optional<String> extractURL(RequestAttributes attributes) {
         if (attributes instanceof ServletRequestAttributes) {
             // Handle Servlet-based requests
             return Optional.of(((ServletRequestAttributes) attributes).getRequest().getRequestURL().toString());

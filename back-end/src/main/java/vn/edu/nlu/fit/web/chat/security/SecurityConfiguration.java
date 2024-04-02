@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -25,16 +24,14 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorized) -> authorized
-                        .requestMatchers("/api/v1/auth/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement((sessionManager) -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 //                .oauth2Login(oauth2Login ->
 //                        oauth2Login.userInfoEndpoint(userInfoEndpoint ->
 //                                userInfoEndpoint.oidcUserService(oidcUserService()))
 //                )
-                .logout(Customizer.withDefaults());
 
         return http.build();
     }
@@ -45,7 +42,9 @@ public class SecurityConfiguration {
     }
 
     public static final String[] IGNORED_ENDPOINTS = new String[]{
-            "/api/v1/users/connected"
+            "/api/v1/users/connected",
+            "/api/v1/auth/sign-in",
+            "/api/v1/users"
     };
 
 }
