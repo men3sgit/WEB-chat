@@ -31,5 +31,7 @@ public interface AuthenticationService {
      * @return the username if logged in, null otherwise
      */
     String getCurrentUsername();
+
+    void verifyNewUser(String token);
 }
 

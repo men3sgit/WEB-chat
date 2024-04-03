@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
@@ -13,31 +14,12 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class VerificationToken implements Token {
-    private Long id;
+public class VerificationToken implements Token, EmailToken {
+    @Id
+    private String id;
     private String email;
     private Instant expiry;
-    private String token;
-
-    @Override
-    public String getTokenValue() {
-        return token;
-    }
-
-    @Override
-    public void setTokenValue(String token) {
-        this.token = token;
-    }
-
-    @Override
-    public Instant getExpiryInstant() {
-        return this.expiry;
-    }
-
-    @Override
-    public void setExpiryInstant(Instant expiryInstant) {
-
-    }
+    private String value;
 
     @Override
     public TokenType getTokenType() {

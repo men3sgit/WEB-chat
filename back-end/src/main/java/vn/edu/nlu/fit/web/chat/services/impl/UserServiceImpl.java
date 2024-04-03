@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import vn.edu.nlu.fit.web.chat.utils.SpringDataUtil;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,7 +30,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
-
     private final EmailService emailService;
 
     private final UserDtoMapper userDtoMapper;
@@ -78,11 +78,13 @@ public class UserServiceImpl implements UserService {
         try {
             Token verificationToken = VerificationToken.builder()
                     .email(newUser.getEmail())
-                    .expiry(Instant.ofEpochSecond(600L))
-                    .token(UUID.randomUUID().toString())
+                    .expiry(Instant.now().plus(1, ChronoUnit.DAYS))
+                    .value(UUID.randomUUID().toString())
                     .build();
-            emailService.sendVerificationEmail(newUser.getEmail(), verificationToken.getTokenValue());
+            tokenService.save(verificationToken);
+            emailService.sendVerificationEmail(newUser.getEmail(), verificationToken.getValue());
         } catch (InvalidTokenException e) {
+            throw new ApiRequestException(e.getMessage());
         }
 
         return new RegistrationResponse(newUser.getId());
@@ -93,17 +95,7 @@ public class UserServiceImpl implements UserService {
                 .orElse(null);
     }
 
-    @Override
-    public void verifyNewUser(String tokenValue) {
-        VerificationToken verificationToken = (VerificationToken) tokenService.getToken(tokenValue);
 
-        if (tokenService.isTokenExpired(verificationToken.getTokenValue())) {
-            throw new InvalidTokenException("Token expired");
-        }
-        User user = userRepository.findByEmail(verificationToken.getEmail()).orElseThrow(() -> new ApiRequestException("Email not found"));
-        user.setActive(true);
-        userRepository.save(user);
-    }
 
 
 }

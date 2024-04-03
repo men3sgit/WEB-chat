@@ -4,13 +4,13 @@ import java.time.Instant;
 
 public interface Token {
 
-        String getTokenValue();      // Renamed for clarity
+        String getValue();      // Renamed for clarity
 
-        void setTokenValue(String token);
+        void setValue(String token);
 
-        Instant getExpiryInstant();  // Modernized using Instant
+        Instant getExpiry();  // Modernized using Instant
 
-        void setExpiryInstant(Instant expiryInstant);
+        void setExpiry(Instant expiryInstant);
 
         TokenType getTokenType();    // Assuming TokenType is an enum
 

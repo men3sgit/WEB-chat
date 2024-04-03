@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
 
 public interface TokenService {
 
-    boolean isTokenExpired(String token);
+    boolean isTokenExpired(Token token);
 
-    Token getToken(String token);
+    Token getToken(String tokenValue);
 
-    VerificationToken getVerificationToken(String token);
+    void save(Token token);
 
-
+    void delete(Token token);
 }

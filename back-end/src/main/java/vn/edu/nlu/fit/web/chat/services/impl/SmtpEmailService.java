@@ -22,7 +22,7 @@ public class SmtpEmailService implements EmailService {
     @Override
     public void sendVerificationEmail(String email, String token) {
         String subject = "Please verify your account";
-        String verificationUrl = "http://your-app.com/api/v1/auth/add-user/verify?token=" + token;
+        String verificationUrl = "localhost:8080/api/v1/auth/add-user/verify?token=" + token;
         String message = "Click the link below to verify your email address:\n" + verificationUrl;
 
         MimeMessage mimeMessage = createMimeMessage(email, subject, message);

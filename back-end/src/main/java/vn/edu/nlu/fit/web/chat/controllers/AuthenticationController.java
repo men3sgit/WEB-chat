@@ -3,10 +3,7 @@ package vn.edu.nlu.fit.web.chat.controllers;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import vn.edu.nlu.fit.web.chat.payload.ApiResponse;
 import vn.edu.nlu.fit.web.chat.payload.LoginResponse;
 import vn.edu.nlu.fit.web.chat.payload.LoginRequest;
@@ -28,10 +25,16 @@ public class AuthenticationController {
     }
 
 
-    @PostMapping("/logout")
+    @PostMapping("/sign-out")
     public ResponseEntity<Void> logout() {
         authenticationService.logout();
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("verify-new-user")
+    public ApiResponse<Void> verifyNewUserByToken(@RequestParam String token){
+        authenticationService.verifyNewUser(token);
+        return new ApiResponse<>();
     }
 
 

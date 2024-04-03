@@ -14,7 +14,6 @@ import java.time.Instant;
 import static vn.edu.nlu.fit.web.chat.utils.HttpRequestUtil.getHttpRequestURL;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL) // Only include non-null fields in JSON response
@@ -41,6 +40,10 @@ public class ApiResponse<T> {
         this.message = "Success";
         this.timestamp = Instant.now();
         this.url = getHttpRequestURL().orElse("");
+    }
+
+    public ApiResponse() {
+        this(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT.name());
     }
 
     // Separate constructor for error responses

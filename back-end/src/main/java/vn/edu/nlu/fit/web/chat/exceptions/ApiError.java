@@ -19,6 +19,7 @@ public class ApiError {
         VALIDATION_ERROR,
         API_REQUEST_ERROR,
         INTERNAL_SERVER_ERROR,
+        UNAUTHORIZED_ERROR
     }
 
     private int code;
