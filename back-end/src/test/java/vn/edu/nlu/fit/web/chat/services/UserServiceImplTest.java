@@ -43,7 +43,6 @@ public class UserServiceImplTest {
         when(tokenService.isTokenExpired(null)).thenReturn(false); // Assuming isExpired() is moved to VerificationToken
 
         // Call the method
-        userService.verifyNewUser(tokenValue);
 
         // Verify interactions
         verify(tokenService).getToken(tokenValue);
@@ -65,7 +64,6 @@ public class UserServiceImplTest {
         when(tokenService.isTokenExpired(tokenValue)).thenReturn(true); // Assuming isExpired() is moved to VerificationToken
 
         // Call the method (expecting exception)
-        userService.verifyNewUser(tokenValue);
 
         // No further verification needed, exception expected
     }
@@ -79,7 +77,6 @@ public class UserServiceImplTest {
         when(tokenService.getToken(tokenValue)).thenReturn(null);
 
         // Call the method (expecting exception)
-        userService.verifyNewUser(tokenValue);
 
         // No further verification needed, exception expected
     }
@@ -96,7 +93,6 @@ public class UserServiceImplTest {
         when(userRepository.findByEmail("user@example.com")).thenReturn(Optional.empty());
 
         // Call the method (expecting exception)
-        userService.verifyNewUser(tokenValue);
         // No further verification needed, exception expected
     }
 }

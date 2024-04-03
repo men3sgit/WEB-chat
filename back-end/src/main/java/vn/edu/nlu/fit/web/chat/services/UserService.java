@@ -17,7 +17,6 @@ public interface UserService {
 
     RegistrationResponse register(RegistrationRequest request);
 
-    void verifyNewUser(String token);
 
 
 }

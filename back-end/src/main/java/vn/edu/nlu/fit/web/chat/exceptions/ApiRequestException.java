@@ -2,17 +2,16 @@ package vn.edu.nlu.fit.web.chat.exceptions;
 
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 public class ApiRequestException extends RuntimeException {
     private int code;
-    private Collection<Object> errorFields;
+    private Collection<Object> errorFields = new ArrayList<>();
     private String type;
 
     public ApiRequestException(String message) {

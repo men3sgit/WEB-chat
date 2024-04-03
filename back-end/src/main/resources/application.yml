@@ -5,6 +5,7 @@ spring:
       database: chatchit
       port: 27017
 
+
   # SECURITY
   security:
     oauth2:
