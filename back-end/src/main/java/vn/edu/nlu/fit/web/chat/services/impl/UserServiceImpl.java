@@ -36,23 +36,17 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void connect(User user) {
-        user.setId("10");
-        user.setStatus(Status.ONLINE);
-        userRepository.save(user);
+    public void connect(UserDto user) {
+        var connectingUser = getUserById(user.id());
+        connectingUser.setStatus(Status.ONLINE);
+        userRepository.save(connectingUser);
     }
 
     @Override
-    public void disconnect(User user) {
-        var storedUser = getUserById(user.getId());
-        if (storedUser == null) {
-            // TODO: can implement needed requirements
-            return;
-        }
-
-
-        user.setStatus(Status.OFFLINE);
-        userRepository.save(user);
+    public void disconnect(UserDto user) {
+        var disconectingUser = getUserById(user.id());
+        disconectingUser.setStatus(Status.OFFLINE);
+        userRepository.save(disconectingUser);
     }
 
     @Override
@@ -94,8 +88,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id)
                 .orElse(null);
     }
-
-
 
 
 }

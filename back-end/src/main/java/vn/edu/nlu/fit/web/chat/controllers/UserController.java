@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import vn.edu.nlu.fit.web.chat.documents.User;
 import vn.edu.nlu.fit.web.chat.dto.UserDto;
 import vn.edu.nlu.fit.web.chat.payload.ApiResponse;
 import vn.edu.nlu.fit.web.chat.payload.RegistrationRequest;
@@ -32,14 +31,14 @@ public class UserController {
 
     @MessageMapping("/user.connect")
     @SendTo("/user/topic")
-    public User connect(@Payload User user) {
+    public UserDto connect(@Payload UserDto user) {
         userService.connect(user);
         return user;
     }
 
     @MessageMapping("/user.disconnect")
     @SendTo("/user/topic")
-    public User disconnect(@Payload User user) {
+    public UserDto disconnect(@Payload UserDto user) {
         userService.disconnect(user);
         return user;
     }

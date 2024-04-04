@@ -9,9 +9,9 @@ import vn.edu.nlu.fit.web.chat.payload.RegistrationResponse;
 import java.util.List;
 
 public interface UserService {
-    void connect(User user);
+    void connect(UserDto user);
 
-    void disconnect(User user);
+    void disconnect(UserDto user);
 
     List<UserDto> getConnectedUsers();
 

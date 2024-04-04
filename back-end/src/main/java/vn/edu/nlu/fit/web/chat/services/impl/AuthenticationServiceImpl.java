@@ -1,6 +1,5 @@
 package vn.edu.nlu.fit.web.chat.services.impl;
 
-import com.mongodb.DuplicateKeyException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +19,6 @@ import vn.edu.nlu.fit.web.chat.services.AuthenticationService;
 import vn.edu.nlu.fit.web.chat.services.EmailExtractorService;
 import vn.edu.nlu.fit.web.chat.services.TokenService;
 import vn.edu.nlu.fit.web.chat.utils.SpringSecurityUtil;
-
-import java.time.Instant;
 
 @Service
 @RequiredArgsConstructor
