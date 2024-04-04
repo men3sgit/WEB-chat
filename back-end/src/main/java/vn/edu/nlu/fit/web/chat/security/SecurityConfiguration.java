@@ -44,7 +44,8 @@ public class SecurityConfiguration {
     public static final String[] IGNORED_ENDPOINTS = new String[]{
             "/api/v1/users/connected",
             "/api/v1/auth/**",
-            "/api/v1/users"
+            "/api/v1/users",
+            "ws**"
     };
 
 }

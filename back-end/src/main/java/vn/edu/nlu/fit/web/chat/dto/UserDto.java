@@ -5,7 +5,7 @@ import vn.edu.nlu.fit.web.chat.documents.Status;
 
 @Builder
 public record UserDto(
-        Long id,
+        String id,
         String email,
         String username,
         String firstName,
