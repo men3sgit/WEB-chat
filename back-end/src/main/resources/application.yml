@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost
+      uri: mongodb+srv://menesforenglish102:V6vvtqJ4VHgWM6Ba@cluster0.dnahmhf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
       database: chatchit
       port: 27017
 
@@ -35,8 +35,9 @@ spring:
 server:
   port: 9090
 
+
 app:
-  baseURL: localhost:${server.port}
+  baseURL: http://localhost:${server.port}
   name: ChatChit
   jwt:
     secretKey: c3ckfrhaKW8Mplm9ylgQCsMLoFmsip/ouP1u51eWRLRtCgDA6OFoLH+azJtNEDUYODPqhm/Kms2jYJdaIczcrap9vBVrbd7qMk1AuoNJjZg=
@@ -44,11 +45,16 @@ app:
   token:
     refresh:
       expiration-time-ms: 86400000 # a day
-
     registration:
       expiration-time-ms: 900000 # 15 minutes
-      verify-endpoint: ${url.domain}/api/v1/auth/verify-registration
-
     forgot-password:
       expiration-time-ms: 1800000 # 30 minutes
-      verify-endpoint: ${url.domain}/api/v1/auth/verify-forgot-password
+    reset-password:
+      expiration-time-ms: 1800000 # 30 minutes
+
+
+  endpoint:
+    security:
+      verify-new-user: ${app.baseURL}/api/v1/auth/verify-new-user
+      reset-password: ${app.baseURL}/api/v1/auth/reset-password
+

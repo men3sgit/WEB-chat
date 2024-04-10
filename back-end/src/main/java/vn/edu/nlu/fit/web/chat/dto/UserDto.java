@@ -1,7 +1,7 @@
 package vn.edu.nlu.fit.web.chat.dto;
 
 import lombok.Builder;
-import vn.edu.nlu.fit.web.chat.documents.Status;
+import vn.edu.nlu.fit.web.chat.document.Status;
 
 @Builder
 public record UserDto(
