@@ -4,9 +4,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vn.edu.nlu.fit.web.chat.payload.ApiResponse;
-import vn.edu.nlu.fit.web.chat.payload.LoginResponse;
-import vn.edu.nlu.fit.web.chat.payload.LoginRequest;
+import vn.edu.nlu.fit.web.chat.dto.response.ApiResponse;
+import vn.edu.nlu.fit.web.chat.dto.response.LoginResponse;
+import vn.edu.nlu.fit.web.chat.dto.request.LoginRequest;
 import vn.edu.nlu.fit.web.chat.service.AuthenticationService;
 
 @RestController

@@ -1,6 +1,6 @@
 package vn.edu.nlu.fit.web.chat.service;
 
-import vn.edu.nlu.fit.web.chat.payload.LoginResponse;
+import vn.edu.nlu.fit.web.chat.dto.response.LoginResponse;
 
 public interface AuthenticationService {
 

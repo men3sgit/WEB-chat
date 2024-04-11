@@ -2,8 +2,8 @@ package vn.edu.nlu.fit.web.chat.service;
 
 
 import vn.edu.nlu.fit.web.chat.dto.UserDto;
-import vn.edu.nlu.fit.web.chat.payload.RegistrationRequest;
-import vn.edu.nlu.fit.web.chat.payload.RegistrationResponse;
+import vn.edu.nlu.fit.web.chat.dto.request.RegistrationRequest;
+import vn.edu.nlu.fit.web.chat.dto.response.RegistrationResponse;
 
 import java.util.List;
 
