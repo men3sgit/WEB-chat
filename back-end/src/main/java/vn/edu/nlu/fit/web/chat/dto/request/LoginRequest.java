@@ -1,4 +1,4 @@
-package vn.edu.nlu.fit.web.chat.payload;
+package vn.edu.nlu.fit.web.chat.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
