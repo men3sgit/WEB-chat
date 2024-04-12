@@ -36,7 +36,7 @@ function onConnected() {
     stompClient.subscribe(`/user/public`, onMessageReceived);
 
     // register the connected user
-    stompClient.send("/app/user.addUser",
+    stompClient.send("/app/user.connect",
         {},
         JSON.stringify({nickName: nickname, fullName: fullname, status: 'ONLINE'})
     );
@@ -45,7 +45,7 @@ function onConnected() {
 }
 
 async function findAndDisplayConnectedUsers() {
-    const connectedUsersResponse = await fetch('/users');
+    const connectedUsersResponse = await fetch('/api/v1/users/connected');
     let connectedUsers = await connectedUsersResponse.json();
     connectedUsers = connectedUsers.filter(user => user.nickName !== nickname);
     const connectedUsersList = document.getElementById('connectedUsers');
@@ -177,7 +177,7 @@ async function onMessageReceived(payload) {
 }
 
 function onLogout() {
-    stompClient.send("/app/user.disconnectUser",
+    stompClient.send("/app/user.disconnect",
         {},
         JSON.stringify({nickName: nickname, fullName: fullname, status: 'OFFLINE'})
     );
