@@ -9,7 +9,7 @@ import org.springframework.util.MultiValueMap;
  * Represents a successful response with an HTTP status code, a message, and optional data.
  * Extends ResponseEntity to provide compatibility with Spring MVC.
  */
-public class ResponseSuccess extends ResponseEntity<ResponseSuccess.Payload> {
+public class ResponseSuccess<T> extends ResponseEntity<ResponseSuccess.Payload<T>> {
 
     /**
      * Constructs a ResponseSuccess object with the given HTTP status and message.
@@ -28,7 +28,7 @@ public class ResponseSuccess extends ResponseEntity<ResponseSuccess.Payload> {
      * @param message A descriptive message explaining the success. Must not be null.
      * @param data    Optional data to be included in the response. Can be null.
      */
-    public ResponseSuccess(HttpStatus status, String message, Object data) {
+    public ResponseSuccess(HttpStatus status, String message, T data) {
         super(new Payload(status.value(), message, data), status);
     }
 
@@ -77,11 +77,11 @@ public class ResponseSuccess extends ResponseEntity<ResponseSuccess.Payload> {
     /**
      * Represents the payload of a successful response.
      */
-    public static class Payload {
+    public static class Payload<T> {
         private final int status;
         private final String message;
         @JsonInclude(JsonInclude.Include.NON_NULL)
-        private Object data;
+        private T data;
 
         /**
          * Constructs a Payload object with the given HTTP status and message.
@@ -101,7 +101,7 @@ public class ResponseSuccess extends ResponseEntity<ResponseSuccess.Payload> {
          * @param message A descriptive message explaining the success.
          * @param data    Optional data to be included in the response.
          */
-        public Payload(int status, String message, Object data) {
+        public Payload(int status, String message, T data) {
             this.status = status;
             this.message = message;
             this.data = data;
@@ -130,7 +130,7 @@ public class ResponseSuccess extends ResponseEntity<ResponseSuccess.Payload> {
          *
          * @return The data.
          */
-        public Object getData() {
+        public T getData() {
             return data;
         }
     }
