@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import vn.edu.nlu.fit.web.chat.dto.UserDto;
-import vn.edu.nlu.fit.web.chat.dto.response.ApiResponse;
 import vn.edu.nlu.fit.web.chat.dto.request.RegistrationRequest;
 import vn.edu.nlu.fit.web.chat.dto.response.RegistrationResponse;
 import vn.edu.nlu.fit.web.chat.dto.response.ResponseSuccess;
@@ -51,10 +50,9 @@ public class UserController {
 
 
     @GetMapping("/api/v1/users/connected")
-    public ResponseEntity<List<UserDto>> getConnectedUsers() {
-        return ResponseEntity.ok(
-                userService.getConnectedUsers()
-        );
+    public ResponseSuccess<List<UserDto>> getConnectedUsers() {
+        var data = userService.getConnectedUsers();
+        return new ResponseSuccess<>(HttpStatus.OK, "connected users", data);
     }
 
 

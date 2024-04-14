@@ -1,7 +1,9 @@
 package vn.edu.nlu.fit.web.chat.controller;
 
+import org.springframework.http.HttpStatus;
 import vn.edu.nlu.fit.web.chat.document.ChatMessage;
 import vn.edu.nlu.fit.web.chat.document.ChatNotification;
+import vn.edu.nlu.fit.web.chat.dto.response.ResponseSuccess;
 import vn.edu.nlu.fit.web.chat.service.ChatMessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +23,12 @@ public class ChatController {
     private final SimpMessagingTemplate messagingTemplate;
 
     @GetMapping("/messages/{sender}/{recipient}")
-    public ResponseEntity<List<ChatMessage>> getChatMessages(
+    public ResponseSuccess<List<ChatMessage>> getChatMessages(
             @PathVariable(name = "sender") Long senderId,
             @PathVariable(name = "recipient") Long recipientId) {
 
         var chatMessages = chatMessageService.getChatMessages(senderId, recipientId);
-        return ResponseEntity.ok(chatMessages);
+        return new ResponseSuccess<>(HttpStatus.OK,"chat message history",chatMessages);
     }
 
     @MessageMapping("/chat")

@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import vn.edu.nlu.fit.web.chat.document.User;
 import vn.edu.nlu.fit.web.chat.document.token.Token;
+import vn.edu.nlu.fit.web.chat.dto.request.ResetPasswordRequest;
 import vn.edu.nlu.fit.web.chat.dto.response.LoginResponse;
 import vn.edu.nlu.fit.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.fit.web.chat.repositoriy.UserRepository;
@@ -86,6 +87,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         } catch (RuntimeException ex) {
             throw new ApiRequestException(ex.getMessage());
         }
+    }
+
+    @Override
+    public void sendPasswordReset(String email) {
+
+    }
+
+    @Override
+    public void resetPassword(ResetPasswordRequest request) {
+
     }
 }
 

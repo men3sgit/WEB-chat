@@ -1,5 +1,6 @@
 package vn.edu.nlu.fit.web.chat.service;
 
+import vn.edu.nlu.fit.web.chat.dto.request.ResetPasswordRequest;
 import vn.edu.nlu.fit.web.chat.dto.response.LoginResponse;
 
 public interface AuthenticationService {
@@ -33,5 +34,9 @@ public interface AuthenticationService {
     String getCurrentUsername();
 
     void verifyNewUser(String token);
+
+    void sendPasswordReset(String email);
+
+    void resetPassword(ResetPasswordRequest request);
 }
 
