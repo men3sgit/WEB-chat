@@ -38,7 +38,7 @@ public class ApiResponse<T> {
         this.statusCode = HttpStatus.OK.value();
         this.message = "Success";
         this.timestamp = Instant.now();
-        this.url = getHttpRequestURL().orElse("");
+        this.url = getHttpRequestURL().orElse("Unknown");
     }
 
     public ApiResponse() {
