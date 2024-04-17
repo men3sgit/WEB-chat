@@ -41,8 +41,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/forgot-password")
-    public ResponseSuccess<Void> forgotPassword(@RequestParam String email) {
-        authenticationService.sendPasswordReset(email);
+    public ResponseSuccess<Void> forgotPassword(@RequestParam String username) {
+        authenticationService.sendPasswordReset(username);
         return new ResponseSuccess<>(HttpStatus.NO_CONTENT,"Forgot password reset successful");
     }
 

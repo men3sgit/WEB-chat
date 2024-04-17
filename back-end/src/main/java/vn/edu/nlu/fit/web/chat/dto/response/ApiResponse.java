@@ -6,13 +6,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 import java.time.Instant;
 
 import static vn.edu.nlu.fit.web.chat.utils.HttpRequestUtil.getHttpRequestURL;
-
-@Data
+@Getter
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL) // Only include non-null fields in JSON response

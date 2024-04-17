@@ -35,7 +35,7 @@ public interface AuthenticationService {
 
     void verifyNewUser(String token);
 
-    void sendPasswordReset(String email);
+    void sendPasswordReset(String username);
 
     void resetPassword(ResetPasswordRequest request);
 }

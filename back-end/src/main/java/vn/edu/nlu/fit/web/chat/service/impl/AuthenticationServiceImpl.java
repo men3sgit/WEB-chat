@@ -83,6 +83,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             User user = userRepository.findByEmail(email).orElseThrow(() -> new ApiRequestException("Email not found"));
             user.setActive(true);
             userRepository.save(user);
+            // ERROR duplicate token id if not delete
             tokenService.delete(verificationToken);
         } catch (RuntimeException ex) {
             throw new ApiRequestException(ex.getMessage());
@@ -90,7 +91,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void sendPasswordReset(String email) {
+    public void sendPasswordReset(String username) {
 
     }
 

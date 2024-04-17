@@ -12,7 +12,7 @@ import vn.edu.nlu.fit.web.chat.service.EmailService;
 
 @RequiredArgsConstructor
 @Service
-public class SMTPEmailService implements EmailService {
+public class SmtpEmailService implements EmailService {
 
     private final JavaMailSender mailSender;
 
