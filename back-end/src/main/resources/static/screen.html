@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Screen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .chat-box {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 400px;
+            margin-bottom: 20px;
+        }
+        .chat-box .message {
+            margin-bottom: 10px;
+        }
+        .chat-box .message.sender {
+            text-align: right;
+        }
+        .chat-box .message.receiver {
+            text-align: left;
+        }
+        .message-content {
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 10px;
+            display: inline-block;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+        .input-box {
+            display: flex;
+            align-items: center;
+        }
+        .input-box input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .input-box button {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Chat Room</h2>
+    <div class="chat-box" id="chatBox">
+        <!-- Messages will be dynamically added here -->
+    </div>
+    <div class="input-box">
+        <input type="text" id="messageInput" placeholder="Type your message...">
+        <button id="sendMessageBtn">Send</button>
+    </div>
+</div>
+
+<script>
+    // Dummy data for initial chat messages
+    const messages = [
+        { sender: 'John', content: 'Hello there!' },
+        { sender: 'Alice', content: 'Hi John!' },
+        { sender: 'John', content: 'How are you?' },
+        { sender: 'Alice', content: 'I\'m good, thank you!' }
+    ];
+
+    const chatBox = document.getElementById('chatBox');
+
+    // Function to display messages
+    function displayMessages() {
+        chatBox.innerHTML = ''; // Clear previous messages
+        messages.forEach(message => {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', message.sender.toLowerCase());
+            messageElement.innerHTML = `<span class="message-content">${message.content}</span>`;
+            chatBox.appendChild(messageElement);
+        });
+        // Scroll to the bottom of the chat box
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Display initial messages
+    displayMessages();
+
+    // Function to send a message
+    function sendMessage() {
+        const messageInput = document.getElementById('messageInput');
+        const messageContent = messageInput.value.trim();
+        if (messageContent) {
+            // Add the new message to the messages array
+            messages.push({ sender: 'You', content: messageContent });
+            // Display updated messages
+            displayMessages();
+            // Clear the message input field
+            messageInput.value = '';
+        }
+    }
+
+    // Event listener for sending message button click
+    document.getElementById('sendMessageBtn').addEventListener('click', sendMessage);
+
+    // Event listener for pressing Enter key to send message
+    document.getElementById('messageInput').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
+        }
+    });
+</script>
+</body>
+</html>

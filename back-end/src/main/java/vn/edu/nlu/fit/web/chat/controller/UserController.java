@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -20,7 +21,7 @@ import vn.edu.nlu.fit.web.chat.dto.response.ResponseSuccess;
 import vn.edu.nlu.fit.web.chat.service.UserService;
 
 import java.util.List;
-
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "User Controller")
@@ -31,6 +32,7 @@ public class UserController {
     @PostMapping("/api/v1/users")
     public ResponseSuccess<RegistrationResponse> registerUser(@Valid @RequestBody RegistrationRequest request) {
         var data = userService.register(request);
+        log.info("Registered user: {}", data);
         return new ResponseSuccess<>(HttpStatus.CREATED, "created new user", data);
     }
 
@@ -38,6 +40,7 @@ public class UserController {
     @SendTo("/user/topic")
     public UserDto connect(@Payload UserDto user) {
         userService.connect(user);
+        log.info("Connected user: {}", user);
         return user;
     }
 
@@ -45,6 +48,7 @@ public class UserController {
     @SendTo("/user/topic")
     public UserDto disconnect(@Payload UserDto user) {
         userService.disconnect(user);
+        log.info("Disconnected user: {}", user);
         return user;
     }
 
@@ -52,6 +56,7 @@ public class UserController {
     @GetMapping("/api/v1/users/connected")
     public ResponseSuccess<List<UserDto>> getConnectedUsers() {
         var data = userService.getConnectedUsers();
+        log.info("Connected users: {}", data);
         return new ResponseSuccess<>(HttpStatus.OK, "connected users", data);
     }
 

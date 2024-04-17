@@ -16,10 +16,4 @@ public enum Gender {
     @JsonProperty("other")
     OTHER;
 
-    /**
-     * No-argument constructor.
-     */
-    Gender() {
-        // Optional: Add initialization logic if needed
-    }
 }

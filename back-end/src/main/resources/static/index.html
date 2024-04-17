@@ -3,54 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/main.css">
-    <title>Chat Application</title>
+    <title>Join Chat Room</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .container {
+            width: 300px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .container h2 {
+            margin-top: 0;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-
-<h2>One to One Chat | Spring boot & Websocket | By Alibou</h2>
-
-<div class="user-form" id="username-page">
-    <h2>Enter Chatroom</h2>
-    <form id="usernameForm">
-        <label for="nickname">Nickname:</label>
-        <input type="text" id="nickname" name="nickname" required>
-
-        <label for="fullname">Real Name:</label>
-        <input type="text" id="fullname" name="realname" required>
-
-        <button type="submit">Enter Chatroom</button>
+<div class="container">
+    <h2>Join Chat Room</h2>
+    <form id="joinForm">
+        <div class="input-group">
+            <label for="roomId">Chat Room ID:</label>
+            <input type="text" id="roomId" name="roomId" required>
+        </div>
+        <div class="input-group">
+            <label for="username">User Name:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <button type="submit" class="btn">Join Chat</button>
     </form>
 </div>
 
-<div class="chat-container hidden" id="chat-page">
-    <div class="users-list">
-        <div class="users-list-container">
-            <h2>Online Users</h2>
-            <ul id="connectedUsers">
-            </ul>
-        </div>
-        <div>
-            <p id="connected-user-fullname"></p>
-            <a class="logout" href="javascript:void(0)" id="logout">Logout</a>
-        </div>
-    </div>
+<script>
+    document.getElementById('joinForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const roomId = document.getElementById('roomId').value.trim();
+        const username = document.getElementById('username').value.trim();
 
-    <div class="chat-area">
-        <div class="chat-area" id="chat-messages">
-        </div>
-
-        <form id="messageForm" name="messageForm" class="hidden">
-            <div class="message-input">
-                <input autocomplete="off" type="text" id="message" placeholder="Type your message...">
-                <button>Send</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<script src="/js/main.js"></script>
+        // Do something with the roomId and username, like joining the chat room
+        console.log('Joining chat room:', roomId);
+        console.log('Username:', username);
+        // You can add your logic here to handle the submission, like making an API call to join the chat room
+    });
+</script>
 </body>
 </html>

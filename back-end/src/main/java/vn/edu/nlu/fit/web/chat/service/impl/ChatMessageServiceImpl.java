@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +21,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
     @Override
     public ChatMessage save(ChatMessage message) {
-
         String chatId = chatRoomService.getChatId(
                         message.getSenderId(),
                         message.getRecipientId(),
@@ -36,6 +36,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     @Override
     public List<ChatMessage> getChatMessages(Long senderId, Long recipientId) {
         Optional<String> chatId = chatRoomService.getChatId(senderId, recipientId, false);
-        return chatId.map(chatMessageRepository::findByChatId).orElse(new ArrayList<>());
+        return chatId.map(chatMessageRepository::findByChatId).orElse(Collections.EMPTY_LIST);
     }
 }

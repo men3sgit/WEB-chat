@@ -1,6 +1,9 @@
 package vn.edu.nlu.fit.web.chat.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
@@ -77,61 +80,15 @@ public class ResponseSuccess<T> extends ResponseEntity<ResponseSuccess.Payload<T
     /**
      * Represents the payload of a successful response.
      */
+    @Getter
+    @RequiredArgsConstructor
+    @AllArgsConstructor
     public static class Payload<T> {
         private final int status;
         private final String message;
         @JsonInclude(JsonInclude.Include.NON_NULL)
         private T data;
 
-        /**
-         * Constructs a Payload object with the given HTTP status and message.
-         *
-         * @param status  The HTTP status code indicating the success.
-         * @param message A descriptive message explaining the success.
-         */
-        public Payload(int status, String message) {
-            this.status = status;
-            this.message = message;
-        }
 
-        /**
-         * Constructs a Payload object with the given HTTP status, message, and data.
-         *
-         * @param status  The HTTP status code indicating the success.
-         * @param message A descriptive message explaining the success.
-         * @param data    Optional data to be included in the response.
-         */
-        public Payload(int status, String message, T data) {
-            this.status = status;
-            this.message = message;
-            this.data = data;
-        }
-
-        /**
-         * Gets the HTTP status code of the response.
-         *
-         * @return The HTTP status code.
-         */
-        public int getStatus() {
-            return status;
-        }
-
-        /**
-         * Gets the descriptive message of the response.
-         *
-         * @return The descriptive message.
-         */
-        public String getMessage() {
-            return message;
-        }
-
-        /**
-         * Gets the data included in the response.
-         *
-         * @return The data.
-         */
-        public T getData() {
-            return data;
-        }
     }
 }

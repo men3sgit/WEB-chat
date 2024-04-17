@@ -6,6 +6,7 @@ spring:
       port: 27017
 
 
+
   # SECURITY
   security:
     oauth2:
