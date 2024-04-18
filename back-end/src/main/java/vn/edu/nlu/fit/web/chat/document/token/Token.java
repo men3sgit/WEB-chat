@@ -1,21 +1,22 @@
 package vn.edu.nlu.fit.web.chat.document.token;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 import java.time.Instant;
-
-@Document(collection = "tokens")
+@Entity
+@Table(name = "tokens")
 public interface Token {
 
-        String getValue();      // Renamed for clarity
+    String getValue();      // Renamed for clarity
 
-        void setValue(String token);
+    void setValue(String token);
 
-        Instant getExpiry();  // Modernized using Instant
+    Instant getExpiry();  // Modernized using Instant
 
-        void setExpiry(Instant expiryInstant);
+    void setExpiry(Instant expiryInstant);
 
-        TokenType getTokenType();    // Assuming TokenType is an enum
+    TokenType getTokenType();    // Assuming TokenType is an enum
 
 
 }

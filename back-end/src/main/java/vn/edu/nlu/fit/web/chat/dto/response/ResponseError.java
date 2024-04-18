@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
  * Represents an error response with an HTTP status code and a message.
  * Inherits from ResponseData, which provides the basic structure for response data.
  */
-public class ResponseError extends ResponseData {
+public class ResponseError extends ResponseFailure {
 
     /**
      * Constructs a ResponseError object with the given HTTP status and message.
@@ -22,7 +22,7 @@ public class ResponseError extends ResponseData {
      * @param message A descriptive message explaining the error. Must not be null or empty.
      */
     public ResponseError(HttpStatus status, String message) {
-        super(status.value(), message);
+        super(status, message);
     }
 
     public ResponseError(String message) {

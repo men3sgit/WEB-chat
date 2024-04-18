@@ -1,21 +1,24 @@
 package vn.edu.nlu.fit.web.chat.document;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Document
-public class ChatNotification {
-    @Id
-    private Long id;
+@Entity
+@Table(name = "chat_notifications")
+public class ChatNotification extends AbstractEntity {
+    @Column(name = "sender_id", nullable = false)
     private Long senderId;
+
+    @Column(name = "recipient_id", nullable = false)
     private Long recipientId;
+
+    @Column(name = "content", nullable = false)
     private String content;
 }

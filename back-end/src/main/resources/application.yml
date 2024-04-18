@@ -1,11 +1,14 @@
 spring:
-  data:
-    mongodb:
-      uri: mongodb+srv://menesforenglish102:V6vvtqJ4VHgWM6Ba@cluster0.dnahmhf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-      database: chatchit
-      port: 27017
+  datasource:
+    password: menespostgres
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/mobile_v2?serverTimezone=UTC
 
-
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   # SECURITY
   security:
