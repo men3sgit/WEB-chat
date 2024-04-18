@@ -1,5 +1,5 @@
 package vn.edu.nlu.fit.web.chat.document;
 
-public enum Status {
+public enum UserStatus {
     ONLINE, OFFLINE
 }

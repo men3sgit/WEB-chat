@@ -7,7 +7,6 @@ import vn.edu.nlu.fit.web.chat.document.ChatNotification;
 import vn.edu.nlu.fit.web.chat.dto.response.ResponseSuccess;
 import vn.edu.nlu.fit.web.chat.service.ChatMessageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;

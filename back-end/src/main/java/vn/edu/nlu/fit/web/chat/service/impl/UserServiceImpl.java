@@ -1,7 +1,7 @@
 package vn.edu.nlu.fit.web.chat.service.impl;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-import vn.edu.nlu.fit.web.chat.document.Status;
+import vn.edu.nlu.fit.web.chat.document.UserStatus;
 import vn.edu.nlu.fit.web.chat.document.User;
 import vn.edu.nlu.fit.web.chat.document.token.Token;
 import vn.edu.nlu.fit.web.chat.document.token.VerificationToken;
@@ -39,20 +39,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public void connect(UserDto user) {
         var connectingUser = getUserById(user.id());
-        connectingUser.setStatus(Status.ONLINE);
+        connectingUser.setUserStatus(UserStatus.ONLINE);
         userRepository.save(connectingUser);
     }
 
     @Override
     public void disconnect(UserDto user) {
         var disconectingUser = getUserById(user.id());
-        disconectingUser.setStatus(Status.OFFLINE);
+        disconectingUser.setUserStatus(UserStatus.OFFLINE);
         userRepository.save(disconectingUser);
     }
 
     @Override
     public List<UserDto> getConnectedUsers() {
-        return userRepository.findAllByStatus(Status.ONLINE).stream().map(userDtoMapper).toList();
+        return userRepository.findAllByStatus(UserStatus.ONLINE).stream().map(userDtoMapper).toList();
     }
 
     @Override

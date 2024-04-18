@@ -1,6 +1,7 @@
 package vn.edu.nlu.fit.web.chat.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,10 +22,11 @@ import vn.edu.nlu.fit.web.chat.service.EmailExtractorService;
 import vn.edu.nlu.fit.web.chat.service.TokenService;
 import vn.edu.nlu.fit.web.chat.utils.SpringSecurityUtil;
 
+
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthenticationServiceImpl implements AuthenticationService {
-    private final static Logger LOGGER = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
 
     private final UserDetailsService userDetailsService;
 
@@ -44,7 +46,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             var userDetails = userDetailsService.loadUserByUsername(email); // Check user exists
             var authentication = new UsernamePasswordAuthenticationToken(email, password);
             authenticationManager.authenticate(authentication);// check enable user or user locked
-            LOGGER.info("Login successful for user: {}", email); // Log successful login
+            log.info("Login successful for user: {}", email); // Log successful login
 
             String token = jwtService.generateToken(userDetails);
 
