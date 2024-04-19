@@ -1,11 +1,11 @@
 package vn.edu.nlu.fit.web.chat.dto;
 
 import lombok.Builder;
-import vn.edu.nlu.fit.web.chat.document.UserStatus;
+import vn.edu.nlu.fit.web.chat.model.UserStatus;
 
 @Builder
 public record UserDto(
-        String id,
+        Long id,
         String email,
         String username,
         String firstName,

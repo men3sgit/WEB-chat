@@ -2,8 +2,8 @@ package vn.edu.nlu.fit.web.chat.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import vn.edu.nlu.fit.web.chat.document.ChatMessage;
-import vn.edu.nlu.fit.web.chat.document.ChatNotification;
+import vn.edu.nlu.fit.web.chat.model.ChatMessage;
+import vn.edu.nlu.fit.web.chat.model.ChatNotification;
 import vn.edu.nlu.fit.web.chat.dto.response.ResponseSuccess;
 import vn.edu.nlu.fit.web.chat.service.ChatMessageService;
 import lombok.RequiredArgsConstructor;

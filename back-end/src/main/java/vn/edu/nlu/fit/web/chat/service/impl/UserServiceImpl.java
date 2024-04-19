@@ -1,10 +1,9 @@
 package vn.edu.nlu.fit.web.chat.service.impl;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-import vn.edu.nlu.fit.web.chat.document.UserStatus;
-import vn.edu.nlu.fit.web.chat.document.User;
-import vn.edu.nlu.fit.web.chat.document.token.Token;
-import vn.edu.nlu.fit.web.chat.document.token.VerificationToken;
+import vn.edu.nlu.fit.web.chat.model.UserStatus;
+import vn.edu.nlu.fit.web.chat.model.User;
+import vn.edu.nlu.fit.web.chat.model.token.Token;
 import vn.edu.nlu.fit.web.chat.dto.UserDto;
 import vn.edu.nlu.fit.web.chat.dto.mapper.UserDtoMapper;
 import vn.edu.nlu.fit.web.chat.exception.ApiRequestException;
@@ -68,7 +67,12 @@ public class UserServiceImpl implements UserService {
 
         // TODO: create new token then send
         try {
-            Token verificationToken = VerificationToken.builder().email(newUser.getEmail()).expiry(Instant.now().plus(1, ChronoUnit.DAYS)).value(UUID.randomUUID().toString()).build();
+            Token verificationToken = Token.builder()
+                    .owner(newUser.getId())
+                    .expiredAt(Instant.now().plus(1, ChronoUnit.DAYS))
+                    .value(UUID.randomUUID().toString()).build();
+
+
             tokenService.save(verificationToken);
             emailService.sendVerificationEmail(newUser.getEmail(), verificationToken.getValue());
         } catch (InvalidTokenException e) {
@@ -83,7 +87,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("Email invalid")).getFirstName();
     }
 
-    private User getUserById(String id) {
+    private User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 

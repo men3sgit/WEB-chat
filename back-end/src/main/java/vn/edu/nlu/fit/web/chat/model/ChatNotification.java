@@ -1,4 +1,4 @@
-package vn.edu.nlu.fit.web.chat.document;
+package vn.edu.nlu.fit.web.chat.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
