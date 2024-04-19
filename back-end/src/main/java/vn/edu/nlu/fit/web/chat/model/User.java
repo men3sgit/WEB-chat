@@ -1,4 +1,4 @@
-package vn.edu.nlu.fit.web.chat.document;
+package vn.edu.nlu.fit.web.chat.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,9 @@ public class User extends AbstractEntity implements UserDetails {
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    @Column(name = "date_of_birth")
+    private Instant dateOfBirth;
 
     @Column(name = "username", nullable = false)
     private UserStatus userStatus;

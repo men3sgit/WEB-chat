@@ -1,13 +1,12 @@
 package vn.edu.nlu.fit.web.chat.service.impl;
 
-import vn.edu.nlu.fit.web.chat.document.ChatMessage;
+import vn.edu.nlu.fit.web.chat.model.ChatMessage;
 import vn.edu.nlu.fit.web.chat.repositoriy.ChatMessageRepository;
 import vn.edu.nlu.fit.web.chat.service.ChatMessageService;
 import vn.edu.nlu.fit.web.chat.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;

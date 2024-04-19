@@ -1,7 +1,7 @@
 
 package vn.edu.nlu.fit.web.chat.service;
 
-import vn.edu.nlu.fit.web.chat.document.ChatMessage;
+import vn.edu.nlu.fit.web.chat.model.ChatMessage;
 
 import java.util.List;
 

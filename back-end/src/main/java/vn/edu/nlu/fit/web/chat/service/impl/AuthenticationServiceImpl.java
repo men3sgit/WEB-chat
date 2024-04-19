@@ -2,23 +2,20 @@ package vn.edu.nlu.fit.web.chat.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-import vn.edu.nlu.fit.web.chat.document.User;
-import vn.edu.nlu.fit.web.chat.document.token.Token;
+import vn.edu.nlu.fit.web.chat.model.User;
 import vn.edu.nlu.fit.web.chat.dto.request.ResetPasswordRequest;
 import vn.edu.nlu.fit.web.chat.dto.response.LoginResponse;
 import vn.edu.nlu.fit.web.chat.exception.ApiRequestException;
+import vn.edu.nlu.fit.web.chat.model.token.Token;
 import vn.edu.nlu.fit.web.chat.repositoriy.UserRepository;
 import vn.edu.nlu.fit.web.chat.security.jwt.JwtService;
 import vn.edu.nlu.fit.web.chat.service.AuthenticationService;
-import vn.edu.nlu.fit.web.chat.service.EmailExtractorService;
 import vn.edu.nlu.fit.web.chat.service.TokenService;
 import vn.edu.nlu.fit.web.chat.utils.SpringSecurityUtil;
 
@@ -35,8 +32,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtService jwtService;
 
     private final TokenService tokenService;
-
-    private final EmailExtractorService emailExtractorService;
 
     private final UserRepository userRepository;
 
@@ -81,12 +76,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             if (tokenService.isTokenExpired(verificationToken)) {
                 throw new ApiRequestException("Token expired");
             }
-            String email = emailExtractorService.extractEmailFromToken(verificationToken.getValue()); // Changed to getTokenValue()
-            User user = userRepository.findByEmail(email).orElseThrow(() -> new ApiRequestException("Email not found"));
+            User user = userRepository.findById(verificationToken.getOwner()).orElseThrow(() -> new ApiRequestException("Email not found"));
             user.setActive(true);
             userRepository.save(user);
-            // ERROR duplicate token id if not delete
-            tokenService.delete(verificationToken);
         } catch (RuntimeException ex) {
             throw new ApiRequestException(ex.getMessage());
         }

@@ -1,4 +1,4 @@
-package vn.edu.nlu.fit.web.chat.document.token;
+package vn.edu.nlu.fit.web.chat.model.token;
 
 public enum TokenType {
     VERIFICATION,

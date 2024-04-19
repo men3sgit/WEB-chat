@@ -1,7 +1,7 @@
 package vn.edu.nlu.fit.web.chat.service.impl;
 
-import vn.edu.nlu.fit.web.chat.document.ChatRoom;
-import vn.edu.nlu.fit.web.chat.document.ChatRoomInfo;
+import vn.edu.nlu.fit.web.chat.model.ChatRoom;
+import vn.edu.nlu.fit.web.chat.model.ChatRoomInfo;
 import vn.edu.nlu.fit.web.chat.repositoriy.ChatRoomRepository;
 import vn.edu.nlu.fit.web.chat.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;

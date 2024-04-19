@@ -1,11 +1,11 @@
-package vn.edu.nlu.fit.web.chat.document;
+package vn.edu.nlu.fit.web.chat.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import vn.edu.nlu.fit.web.chat.enums.EntityState;
+import vn.edu.nlu.fit.web.chat.enums.EntityStatus;
 
 import java.util.Date;
 
@@ -23,7 +23,7 @@ public abstract class AbstractEntity {
     @LastModifiedDate
     private Date updatedAt;
 
-    private EntityState entityState = EntityState.ACTIVE;
+    private EntityStatus entityStatus = EntityStatus.ACTIVE;
 
 
 

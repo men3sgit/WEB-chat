@@ -1,6 +1,6 @@
 package vn.edu.nlu.fit.web.chat.service;
 
-import vn.edu.nlu.fit.web.chat.document.ChatRoomInfo;
+import vn.edu.nlu.fit.web.chat.model.ChatRoomInfo;
 
 import java.util.Optional;
 
