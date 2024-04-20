@@ -41,7 +41,7 @@ public class HtmlEmailService implements EmailService {
 
     @Async
     @Override
-    public void sendVerificationEmail(String recipientEmail, String verificationToken) {
+    public void sendVerification(String recipientEmail, String verificationToken) {
         Context context = new Context();
         context.setVariable("url", verificationUrl + "?token=" + verificationToken);
         context.setVariable("title", applicationName);
@@ -52,7 +52,7 @@ public class HtmlEmailService implements EmailService {
     }
 
     @Override
-    public void sendResetPasswordEmail(String recipientEmail, String resetPasswordToken) {
+    public void sendResetPassword(String recipientEmail, String resetPasswordToken) {
         Context context = new Context();
         context.setVariable("url", resetPasswordUrl + "?token=" + resetPasswordToken);
         context.setVariable("title", applicationName);

@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
 
 
             tokenService.save(verificationToken);
-            emailService.sendVerificationEmail(newUser.getEmail(), verificationToken.getValue());
+            emailService.sendVerification(newUser.getEmail(), verificationToken.getValue());
         } catch (InvalidTokenException e) {
             throw new ApiRequestException(e.getMessage());
         }

@@ -24,7 +24,7 @@ public class SmtpEmailService implements EmailService {
     private String baseURL;
 
     @Override
-    public void sendVerificationEmail(String email, String token) {
+    public void sendVerification(String email, String token) {
         String subject = "Please verify your account";
         String verificationUrl = baseURL + "/api/v1/auth/verify-new-user?token=" + token;
         String message = "Click the link below to verify your email address:\n\n\n" + verificationUrl;
@@ -34,7 +34,7 @@ public class SmtpEmailService implements EmailService {
     }
 
     @Override
-    public void sendResetPasswordEmail(String email, String resetPasswordToken) {
+    public void sendResetPassword(String email, String resetPasswordToken) {
 
     }
 

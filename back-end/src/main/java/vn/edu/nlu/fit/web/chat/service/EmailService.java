@@ -11,7 +11,7 @@ public interface EmailService {
      * @param email             The email address to which the verification email will be sent.
      * @param verificationToken The verification token to include in the email.
      */
-    void sendVerificationEmail(String email, String verificationToken);
+    void sendVerification(String email, String verificationToken);
 
     /**
      * Sends a reset password email to the specified email address with the given reset password token.
@@ -19,6 +19,6 @@ public interface EmailService {
      * @param email              The email address to which the reset password email will be sent.
      * @param resetPasswordToken The reset password token to include in the email.
      */
-    void sendResetPasswordEmail(String email, String resetPasswordToken);
+    void sendResetPassword(String email, String resetPasswordToken);
 
 }
