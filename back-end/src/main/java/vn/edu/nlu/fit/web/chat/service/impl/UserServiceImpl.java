@@ -1,7 +1,7 @@
 package vn.edu.nlu.fit.web.chat.service.impl;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-import vn.edu.nlu.fit.web.chat.model.UserStatus;
+import vn.edu.nlu.fit.web.chat.enums.UserStatus;
 import vn.edu.nlu.fit.web.chat.model.User;
 import vn.edu.nlu.fit.web.chat.model.token.Token;
 import vn.edu.nlu.fit.web.chat.dto.UserDto;
@@ -11,6 +11,7 @@ import vn.edu.nlu.fit.web.chat.exception.InvalidTokenException;
 import vn.edu.nlu.fit.web.chat.exception.UserNotFoundException;
 import vn.edu.nlu.fit.web.chat.dto.request.RegistrationRequest;
 import vn.edu.nlu.fit.web.chat.dto.response.RegistrationResponse;
+import vn.edu.nlu.fit.web.chat.model.token.TokenType;
 import vn.edu.nlu.fit.web.chat.repositoriy.UserRepository;
 import vn.edu.nlu.fit.web.chat.service.EmailService;
 import vn.edu.nlu.fit.web.chat.service.TokenService;
@@ -51,7 +52,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getConnectedUsers() {
-        return userRepository.findAllByStatus(UserStatus.ONLINE).stream().map(userDtoMapper).toList();
+        return userRepository.findAllByUserStatus(UserStatus.ONLINE).stream().map(userDtoMapper).toList();
     }
 
     @Override
@@ -61,20 +62,19 @@ public class UserServiceImpl implements UserService {
         }
         // create new user
         var newUser = SpringDataUtil.copyProperties(request, User.class);
-        newUser.setEmail(request.getEmail());
+        newUser.setUserStatus(UserStatus.OFFLINE);
+        newUser.setUsername(request.getEmail().split("@")[0]);
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.save(newUser);
 
-        // TODO: create new token then send
         try {
             Token verificationToken = Token.builder()
                     .owner(newUser.getId())
+                    .type(TokenType.VERIFICATION)
                     .expiredAt(Instant.now().plus(1, ChronoUnit.DAYS))
                     .value(UUID.randomUUID().toString()).build();
-
-
             tokenService.save(verificationToken);
-            emailService.sendVerification(newUser.getEmail(), verificationToken.getValue());
+            emailService.sendVerificationNewUser(newUser.getEmail(), verificationToken.getValue());
         } catch (InvalidTokenException e) {
             throw new ApiRequestException(e.getMessage());
         }

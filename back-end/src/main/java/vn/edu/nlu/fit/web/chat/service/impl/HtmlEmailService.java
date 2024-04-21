@@ -36,12 +36,12 @@ public class HtmlEmailService implements EmailService {
     private static final String EMAIL_SUBJECT = "Verification New User";
     private static final String VERIFICATION_TEMPLATE_PATH = "email-verification.html";
 
-    private static final String RESET_PASSWORD_TEMPLATE_PATH = "reset-password.html";
+    private static final String RESET_PASSWORD_TEMPLATE_PATH = "email-reset-password.html";
 
 
     @Async
     @Override
-    public void sendVerification(String recipientEmail, String verificationToken) {
+    public void sendVerificationNewUser(String recipientEmail, String verificationToken) {
         Context context = new Context();
         context.setVariable("url", verificationUrl + "?token=" + verificationToken);
         context.setVariable("title", applicationName);
@@ -54,13 +54,14 @@ public class HtmlEmailService implements EmailService {
     @Override
     public void sendResetPassword(String recipientEmail, String resetPasswordToken) {
         Context context = new Context();
-        context.setVariable("url", resetPasswordUrl + "?token=" + resetPasswordToken);
         context.setVariable("title", applicationName);
-        context.setVariable("name", recipientEmail);
-
-
+        context.setVariable("name", recipientEmail);  // Optional, recipient name
+        context.setVariable("resetUrl", resetPasswordUrl + "?token=" + resetPasswordToken);
+        context.setVariable("validityHours", 24);  // Optional, validity period
         String emailContent = templateEngine.process(RESET_PASSWORD_TEMPLATE_PATH, context);
-        sendEmail(recipientEmail, EMAIL_SUBJECT, emailContent);
+
+
+        sendEmail(recipientEmail, "Reset Your Password", emailContent);
     }
 
     private void sendEmail(String recipientEmail, String subject, String emailContent) {

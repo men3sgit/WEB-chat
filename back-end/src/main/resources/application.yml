@@ -1,8 +1,8 @@
 spring:
   datasource:
-    password: menespostgres
+    password:
     username: postgres
-    url: jdbc:postgresql://localhost:5432/mobile_v2?serverTimezone=UTC
+    url: jdbc:postgresql://localhost:5432/web_chat_v1?serverTimezone=UTC
 
   jpa:
     show-sql: true
@@ -47,21 +47,18 @@ open-api:
     version: v1.0.0
     server: http://localhost:9090
 
+
 app:
   baseURL: http://localhost:${server.port}
   name: ChatChit
   jwt:
     secretKey: c3ckfrhaKW8Mplm9ylgQCsMLoFmsip/ouP1u51eWRLRtCgDA6OFoLH+azJtNEDUYODPqhm/Kms2jYJdaIczcrap9vBVrbd7qMk1AuoNJjZg=
     expiration-time-ms: 86400000 # 30 minutes
-  token:
-    refresh:
-      expiration-time-ms: 86400000 # a day
-    registration:
-      expiration-time-ms: 900000 # 15 minutes
-    forgot-password:
-      expiration-time-ms: 1800000 # 30 minutes
-    reset-password:
-      expiration-time-ms: 1800000 # 30 minutes
+  tokenExpirationTimes:
+    refresh: 86400000 # Refresh token expiration time (24 hours)
+    registration: 900000 # Registration token expiration time (15 minutes)
+    forgotPassword: 1800000 # Forgot password token expiration time (30 minutes)
+    resetPassword: 1800000 # Reset password token expiration time (30 minutes)
 
 
   endpoint:

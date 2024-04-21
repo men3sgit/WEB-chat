@@ -35,7 +35,7 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public void delete(Token token) {
-        token.setEntityState(EntityStatus.DELETE);
+        token.setEntityStatus(EntityStatus.DELETE);
         tokenRepository.save(token);
     }
 
