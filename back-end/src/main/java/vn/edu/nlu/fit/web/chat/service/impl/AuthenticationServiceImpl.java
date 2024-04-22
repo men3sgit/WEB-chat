@@ -2,19 +2,21 @@ package vn.edu.nlu.fit.web.chat.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import vn.edu.nlu.fit.web.chat.enums.EntityStatus;
 import vn.edu.nlu.fit.web.chat.exception.UserNotFoundException;
 import vn.edu.nlu.fit.web.chat.model.User;
 import vn.edu.nlu.fit.web.chat.dto.request.ResetPasswordRequest;
 import vn.edu.nlu.fit.web.chat.dto.response.LoginResponse;
 import vn.edu.nlu.fit.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.fit.web.chat.model.token.Token;
+import vn.edu.nlu.fit.web.chat.model.token.TokenType;
 import vn.edu.nlu.fit.web.chat.repositoriy.UserRepository;
 import vn.edu.nlu.fit.web.chat.security.jwt.JwtService;
 import vn.edu.nlu.fit.web.chat.service.AuthenticationService;
@@ -44,6 +46,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final EmailService emailService;
 
+    private final PasswordEncoder passwordEncoder;
+
 
     @Override
     public LoginResponse login(String email, String password) {
@@ -51,12 +55,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             var userDetails = userDetailsService.loadUserByUsername(email); // Check user exists
             var authentication = new UsernamePasswordAuthenticationToken(email, password);
             authenticationManager.authenticate(authentication);// check enable user or user locked
-            log.info("Login successful for user: {}", email); // Log successful login
-
             String token = jwtService.generateToken(userDetails);
 
             return new LoginResponse(token);
+        } catch (UserNotFoundException e) {
+            throw new ApiRequestException(e.getMessage());
         } catch (Exception e) {
+            log.error("Login failed", e);
             throw new ApiRequestException(e.getMessage());  // Generic user-friendly message
         }
     }
@@ -82,43 +87,64 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public void verifyNewUser(String tokenValue) {
         try {
             Token verificationToken = tokenService.getToken(tokenValue);
-
+            if (verificationToken.getEntityStatus() == EntityStatus.INACTIVE) {
+                throw new ApiRequestException("Token has used");
+            }
             if (tokenService.isTokenExpired(verificationToken)) {
                 throw new ApiRequestException("Token expired");
             }
+
             User user = userRepository.findById(verificationToken.getOwner()).orElseThrow(() -> new ApiRequestException("Email not found"));
             user.setActive(true);
             userRepository.save(user);
+            verificationToken.setEntityStatus(EntityStatus.INACTIVE);
+            verificationToken.setExpiredAt(Instant.now());
+            tokenService.save(verificationToken);
         } catch (RuntimeException ex) {
             throw new ApiRequestException(ex.getMessage());
         }
     }
 
     @Override
-    public void sendPasswordReset(String username) {
-        var storedUser = userRepository.findByEmail(username)
-                .orElseThrow(() -> new UserNotFoundException("Username not found"));
-
-        Token token = Token.builder()
-                .expiredAt(Instant.now().plus(1,ChronoUnit.HOURS))
-                .value(UUID.randomUUID().toString())
-                .owner(storedUser.getId())
-                .build();
-        tokenService.save(token);
-
-        // Send reset password email
-        emailService.sendResetPassword(username, token.getValue());
+    public void initiatePasswordResetProcess(String username) {
+        try {
+            User storedUser = getUserByEmail(username);
+            Token resetToken = generateResetToken(storedUser);
+            tokenService.save(resetToken);
+            emailService.sendResetPassword(username, resetToken.getValue());
+            log.info("Password reset process initiated for user: {}", username); // Log password reset initiation
+        } catch (Exception e) {
+            log.error("Error occurred during password reset initiation: {}", e.getMessage(), e); // Log error
+            throw e;
+        }
     }
+
+    private User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User with email " + email + " not found"));
+    }
+
+    private Token generateResetToken(User user) {
+        return Token.builder()
+                .expiredAt(Instant.now().plus(1, ChronoUnit.HOURS))
+                .value(UUID.randomUUID().toString())
+                .type(TokenType.RESET_PASSWORD)
+                .owner(user.getId())
+                .build();
+    }
+
 
     @Override
     public void resetPassword(ResetPasswordRequest request) {
-        var storedUser = userRepository.findByEmail(request.getEmail());
+        var storedUser = userRepository.findByEmail(request.getEmail()).orElseThrow(
+                () -> {
+                    log.error("Error occurred during password reset initiation: {}", request.getEmail());
+                    return new UserNotFoundException("User with email " + request.getEmail() + " not found");
+                });
+        storedUser.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(storedUser);
+        log.info("Password reset for user with email: {}", request.getEmail());
     }
 
-    private void validateToken(String token) {
-        if (token == null) {
-            throw new ApiRequestException("token cannot be null");
-        }
-    }
 }
 

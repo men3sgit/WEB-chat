@@ -1,12 +1,13 @@
 package vn.edu.nlu.fit.web.chat.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import vn.edu.nlu.fit.web.chat.enums.Gender;
+import vn.edu.nlu.fit.web.chat.enums.Role;
+import vn.edu.nlu.fit.web.chat.enums.UserStatus;
 
 import java.time.Instant;
 import java.util.*;
@@ -37,7 +38,11 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(name = "date_of_birth")
     private Instant dateOfBirth;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @Column(name = "user_status", nullable = false)
     private UserStatus userStatus;
 
     @Column(name = "is_active")

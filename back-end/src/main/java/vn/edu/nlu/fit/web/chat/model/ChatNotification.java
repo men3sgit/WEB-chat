@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
 @Table(name = "chat_notifications")
+@Entity
 public class ChatNotification extends AbstractEntity {
     @Column(name = "sender_id", nullable = false)
     private Long senderId;

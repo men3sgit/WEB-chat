@@ -14,7 +14,11 @@ import vn.edu.nlu.fit.web.chat.dto.response.LoginResponse;
 import vn.edu.nlu.fit.web.chat.dto.response.ResponseError;
 import vn.edu.nlu.fit.web.chat.dto.response.ResponseFailure;
 import vn.edu.nlu.fit.web.chat.dto.response.ResponseSuccess;
+import vn.edu.nlu.fit.web.chat.exception.ApiRequestException;
+import vn.edu.nlu.fit.web.chat.exception.UserNotFoundException;
 import vn.edu.nlu.fit.web.chat.service.AuthenticationService;
+
+import javax.naming.AuthenticationException;
 
 @Slf4j
 @RestController
@@ -39,6 +43,12 @@ public class AuthenticationController {
             var res = authenticationService.login(email, password);
             log.info("Login successful for user: {}", email);
             return new ResponseSuccess(HttpStatus.OK, "Login successful", res);
+        } catch (UserNotFoundException e) {
+            log.error("User not found for email: {}", email);
+            return new ResponseFailure(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (ApiRequestException e) {
+            log.error("Api request exception for user: {}", email);
+            return new ResponseFailure(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
             log.error("An error occurred during login for user: {}", email, e);
             return new ResponseFailure(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred");
@@ -73,7 +83,11 @@ public class AuthenticationController {
             authenticationService.verifyNewUser(token);
             log.info("User verification successful for token: {}", token);
             return new ResponseSuccess(HttpStatus.NO_CONTENT, "Verify new user successful");
-        } catch (Exception e) {
+        }catch (ApiRequestException e){
+            log.error("Api request exception for token: {}", token, e);
+            return new ResponseFailure(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        catch (Exception e) {
             log.error("An error occurred during user verification for token {}: {}", token, e.getMessage());
             return new ResponseError(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred during user verification");
         }
@@ -86,7 +100,8 @@ public class AuthenticationController {
     @PostMapping("/forgot-password")
     public ResponseSuccess<?> forgotPassword(@RequestParam String username) {
         try {
-            authenticationService.sendPasswordReset(username);
+            log.info("Received forgot password request for user: {}", username);
+            authenticationService.initiatePasswordResetProcess(username);
             log.info("Forgot password request successful for user: {}", username);
             return new ResponseSuccess<>(HttpStatus.NO_CONTENT, "Forgot password reset successful");
         } catch (Exception e) {
@@ -109,7 +124,7 @@ public class AuthenticationController {
             return new ResponseSuccess(HttpStatus.ACCEPTED, "Password reset successful");
         } catch (Exception e) {
             log.error("Error occurred during password reset for user {}: {}", username, e.getMessage());
-            return new ResponseFailure(HttpStatus.BAD_REQUEST, "Error occurred during password reset for user " + username);
+            return new ResponseError(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred during password reset for user " + username);
         }
     }
 

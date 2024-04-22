@@ -10,13 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import vn.edu.nlu.fit.web.chat.dto.UserDto;
 import vn.edu.nlu.fit.web.chat.dto.request.RegistrationRequest;
 import vn.edu.nlu.fit.web.chat.dto.response.RegistrationResponse;
+import vn.edu.nlu.fit.web.chat.dto.response.ResponseData;
 import vn.edu.nlu.fit.web.chat.dto.response.ResponseSuccess;
 import vn.edu.nlu.fit.web.chat.service.UserService;
 
@@ -55,10 +53,21 @@ public class UserController {
 
     @GetMapping("/api/v1/users/connected")
     public ResponseSuccess<List<UserDto>> getConnectedUsers() {
+        log.info("Request get list of connected users");
         var data = userService.getConnectedUsers();
         log.info("Connected users: {}", data);
         return new ResponseSuccess<>(HttpStatus.OK, "connected users", data);
     }
+
+    @GetMapping(path = "/api/v1/users")
+    public ResponseData<?> getAllUsers(@RequestParam(defaultValue = "0", required = false) int pageNo,
+                                       @RequestParam(defaultValue = "20", required = false) int pageSize,
+                                       @RequestParam(required = false) String search,
+                                       @RequestParam(required = false) String sortBy){
+        log.info("Request get list of users and search with paging and sorting");
+        return new ResponseData<>(HttpStatus.OK, "users", userService.getAllUsersAndSearchWithPagingAndSorting(pageNo, pageSize, search, sortBy));
+    }
+
 
 
 }

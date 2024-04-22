@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import vn.edu.nlu.fit.web.chat.service.EmailService;
 
@@ -23,8 +24,9 @@ public class SmtpEmailService implements EmailService {
     @Value("${app.baseURL}")
     private String baseURL;
 
+    @Async
     @Override
-    public void sendVerification(String email, String token) {
+    public void sendVerificationNewUser(String email, String token) {
         String subject = "Please verify your account";
         String verificationUrl = baseURL + "/api/v1/auth/verify-new-user?token=" + token;
         String message = "Click the link below to verify your email address:\n\n\n" + verificationUrl;

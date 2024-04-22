@@ -23,4 +23,14 @@ public class ChatMessage extends AbstractEntity {
 
     @Column(nullable = false)
     private String content;
+    @Id
+    private Long id;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }
