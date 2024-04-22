@@ -1,6 +1,7 @@
 package vn.edu.nlu.fit.web.chat.service.impl;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import vn.edu.nlu.fit.web.chat.dto.response.PageResponse;
 import vn.edu.nlu.fit.web.chat.enums.UserStatus;
 import vn.edu.nlu.fit.web.chat.model.User;
 import vn.edu.nlu.fit.web.chat.model.token.Token;
@@ -13,6 +14,7 @@ import vn.edu.nlu.fit.web.chat.dto.request.RegistrationRequest;
 import vn.edu.nlu.fit.web.chat.dto.response.RegistrationResponse;
 import vn.edu.nlu.fit.web.chat.model.token.TokenType;
 import vn.edu.nlu.fit.web.chat.repositoriy.UserRepository;
+import vn.edu.nlu.fit.web.chat.repositoriy.UserSearchRepository;
 import vn.edu.nlu.fit.web.chat.service.EmailService;
 import vn.edu.nlu.fit.web.chat.service.TokenService;
 import vn.edu.nlu.fit.web.chat.service.UserService;
@@ -34,6 +36,8 @@ public class UserServiceImpl implements UserService {
     private final EmailService emailService;
 
     private final UserDtoMapper userDtoMapper;
+
+    private final UserSearchRepository userSearchRepository;
 
 
     @Override
@@ -85,6 +89,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getNameByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("Email invalid")).getFirstName();
+    }
+
+    @Override
+    public PageResponse<?> getAllUsersAndSearchWithPagingAndSorting(int pageNo, int pageSize, String search, String sortBy) {
+        return userSearchRepository.searchUsersWithPaginationAndSorting(pageNo, pageSize, search, sortBy);
+
     }
 
     private User getUserById(Long id) {

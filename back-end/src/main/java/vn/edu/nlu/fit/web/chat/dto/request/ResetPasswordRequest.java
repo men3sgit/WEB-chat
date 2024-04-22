@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 /**
  * @example:
  *          {
- *              "email": "user@example.com",
+ *               "email": "user@example.com",
  *               "newPassword": "newPassword123",
  *               "resetToken": "resetTokenValue"
  *          }

@@ -5,6 +5,10 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import vn.edu.nlu.fit.web.chat.dto.validator.annotation.GenderSubset;
+import vn.edu.nlu.fit.web.chat.enums.Gender;
+
+import static vn.edu.nlu.fit.web.chat.enums.Gender.*;
 
 @Data
 public class RegistrationRequest {
@@ -23,4 +27,7 @@ public class RegistrationRequest {
     @NotEmpty(message = "Phone number cannot be empty")
     @Pattern(regexp = "^[0-9]+$", message = "Phone number must contain only digits")
     private String phoneNumber;
+
+    @GenderSubset(anyOf = {MALE, FEMALE, OTHER})
+    private Gender gender;
 }
