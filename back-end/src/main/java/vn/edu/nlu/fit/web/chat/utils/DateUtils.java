@@ -19,7 +19,7 @@ import java.util.Objects;
  * @version 1.0.0
  * @since Java 8 or later
  */
-public class DateUtil {
+public class DateUtils {
     public static final long MILLIS_IN_SECOND = 1000;
     public static final long SECONDS_IN_MINUTE = 60;
     public static final long MINUTES_IN_HOUR = 60;
@@ -261,10 +261,10 @@ public class DateUtil {
                 }
             }
             switch (Objects.requireNonNull(format)) {
-                case DateUtil.FULL_DATETIME_FORMAT, DateUtil.FULL_DATETIME_FORMAT_WITH_MILLIS -> {
+                case DateUtils.FULL_DATETIME_FORMAT, DateUtils.FULL_DATETIME_FORMAT_WITH_MILLIS -> {
                     return LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern(format)).toInstant((ZoneOffset) ZoneId.systemDefault());
                 }
-                case DateUtil.TIME_FORMAT -> {
+                case DateUtils.TIME_FORMAT -> {
                     // Handle time-only format (assuming current date)
                     LocalDate today = LocalDate.now();
                     LocalDateTime dateTime = LocalDateTime.of(today, LocalTime.parse(dateString, DateTimeFormatter.ofPattern(format)));
