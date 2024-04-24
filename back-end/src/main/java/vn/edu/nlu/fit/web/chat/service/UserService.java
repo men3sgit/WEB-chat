@@ -5,7 +5,6 @@ import vn.edu.nlu.fit.web.chat.dto.UserDto;
 import vn.edu.nlu.fit.web.chat.dto.request.RegistrationRequest;
 import vn.edu.nlu.fit.web.chat.dto.response.PageResponse;
 import vn.edu.nlu.fit.web.chat.dto.response.RegistrationResponse;
-import vn.edu.nlu.fit.web.chat.enums.UserStatus;
 
 import java.util.List;
 

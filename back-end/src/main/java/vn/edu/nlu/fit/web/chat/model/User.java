@@ -54,6 +54,19 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(name = "roles")
     private String roles;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Address> addresses = new HashSet<>();
+
+    public void saveAddress(Address address) {
+        if (address != null) {
+            if (addresses == null) {
+                addresses = new HashSet<>();
+            }
+            addresses.add(address);
+            address.setUser(this); // save user_id
+        }
+    }
+
 
     public User() {
         this.roles = Role.ROLE_USER.name();
