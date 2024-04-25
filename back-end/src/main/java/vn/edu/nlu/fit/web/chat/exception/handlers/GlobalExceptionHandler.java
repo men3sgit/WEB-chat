@@ -26,13 +26,11 @@ public class GlobalExceptionHandler {
     }
 
     private ApiError buildApiError(String message) {
-        ApiError apiError = new ApiError();
-        apiError.setCode(HttpStatus.BAD_REQUEST.value()); // Consider using a custom error code scheme
-        apiError.setStatus(HttpStatus.BAD_REQUEST);
-        apiError.setErrorCode(ApiError.ErrorCode.API_REQUEST_ERROR);
-        apiError.setMessage(message);
-        apiError.setTime(Instant.now());
-        apiError.setErrors(Collections.emptyList());
+        ApiError apiError = ApiError.builder()
+                .message(message)
+                .errors(Collections.emptyList())
+                .code(HttpStatus.BAD_REQUEST.value())
+                .build();
         return apiError;
     }
 }

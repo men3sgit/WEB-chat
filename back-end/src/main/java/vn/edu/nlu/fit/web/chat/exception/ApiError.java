@@ -1,19 +1,14 @@
 package vn.edu.nlu.fit.web.chat.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 
-@Data
+@Getter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class ApiError {
     public enum ErrorCode {
         VALIDATION_ERROR,
@@ -27,6 +22,5 @@ public class ApiError {
     private String message;
     private Instant time;
     private List<Map<String, String>> errors; //
-    private ErrorCode errorCode;
 
 }
