@@ -24,7 +24,9 @@ public class OpenApiConfig {
                 .info(new Info().title(title)
                         .description("API documents")
                         .version(version)
-                        .license(new License().name("Apache 2.0").url("https://springdoc.org")));
+                        .license(new License().name("Apache 2.0").url("https://springdoc.org")
+                        )
+                );
     }
 
     @Bean
