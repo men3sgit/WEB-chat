@@ -7,10 +7,12 @@ import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
+import vn.edu.nlu.fit.web.chat.config.Translator;
 import vn.edu.nlu.fit.web.chat.dto.UserDto;
 import vn.edu.nlu.fit.web.chat.dto.request.RegistrationRequest;
 import vn.edu.nlu.fit.web.chat.dto.response.RegistrationResponse;
@@ -32,7 +34,7 @@ public class UserController {
     public ResponseSuccess<RegistrationResponse> registerUser(@Valid @RequestBody RegistrationRequest request) {
         var data = userService.register(request);
         log.info("Registered user: {}", data);
-        return new ResponseSuccess<>(HttpStatus.CREATED, "created new user", data);
+        return new ResponseSuccess<>(HttpStatus.CREATED, Translator.toLocale("user.add.success"), data);
     }
 
     @MessageMapping("/user.connect")
@@ -64,10 +66,18 @@ public class UserController {
     public ResponseData<?> getAllUsers(@RequestParam(defaultValue = "0", required = false) int pageNo,
                                        @Min(10) @RequestParam(defaultValue = "20", required = false) int pageSize,
                                        @RequestParam(required = false) String search,
-                                       @RequestParam(required = false) String sortBy)
-    {
+                                       @RequestParam(required = false) String sortBy) {
         log.info("Request get list of users and search with paging and sorting");
         return new ResponseData<>(HttpStatus.OK, "users", userService.getAllUsersAndSearchWithPagingAndSorting(pageNo, pageSize, search, sortBy));
+    }
+
+
+    @Operation(summary = "Update User Information", description = "API to update user information.")
+    @PutMapping("/api/v1/users/{userId}")
+    public ResponseEntity<Void> updateUser(@PathVariable Long userId, @Valid @RequestBody UpdateUserRequest request) {
+        UserDto updatedUser = userService.updateUser(userId, request);
+        log.info("Updated user information: {}", updatedUser);
+        return new ResponseSuccess<>(HttpStatus.OK, Translator.toLocale("user.update.success"), updatedUser));
     }
 
 
