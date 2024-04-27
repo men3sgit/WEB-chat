@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import vn.edu.nlu.fit.web.chat.config.Translator;
 import vn.edu.nlu.fit.web.chat.dto.UserDto;
 import vn.edu.nlu.fit.web.chat.dto.request.RegistrationRequest;
+import vn.edu.nlu.fit.web.chat.dto.request.UpdateUserRequest;
 import vn.edu.nlu.fit.web.chat.dto.response.RegistrationResponse;
 import vn.edu.nlu.fit.web.chat.dto.response.ResponseData;
 import vn.edu.nlu.fit.web.chat.dto.response.ResponseSuccess;
@@ -74,10 +75,10 @@ public class UserController {
 
     @Operation(summary = "Update User Information", description = "API to update user information.")
     @PutMapping("/api/v1/users/{userId}")
-    public ResponseEntity<Void> updateUser(@PathVariable Long userId, @Valid @RequestBody UpdateUserRequest request) {
-        UserDto updatedUser = userService.updateUser(userId, request);
-        log.info("Updated user information: {}", updatedUser);
-        return new ResponseSuccess<>(HttpStatus.OK, Translator.toLocale("user.update.success"), updatedUser));
+    public ResponseEntity<?> updateUser(@PathVariable Long userId, @Valid @RequestBody UpdateUserRequest request) {
+        userService.updateUser(userId, request);
+        log.info("Updated user information: {}", userId);
+        return new ResponseSuccess<>(HttpStatus.NO_CONTENT, Translator.toLocale("user.update.success"));
     }
 
 
