@@ -9,18 +9,11 @@ import java.util.Map;
 
 @Getter
 @Builder
-public class ApiError {
-    public enum ErrorCode {
-        VALIDATION_ERROR,
-        API_REQUEST_ERROR,
-        INTERNAL_SERVER_ERROR,
-        UNAUTHORIZED_ERROR
-    }
-
+public class ErrorResponse {
     private int code;
     private HttpStatus status;
     private String message;
-    private Instant time;
-    private List<Map<String, String>> errors; //
+    private String path;
+    private Instant timestamp;
 
 }
